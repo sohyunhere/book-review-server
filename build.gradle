@@ -2,6 +2,7 @@ plugins {
 	id 'org.springframework.boot' version '2.7.5'
 	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
 	id 'java'
+	id 'com.ewerk.gradle.plugins.querydsl' version '1.0.10'
 }
 
 group = 'com.example'
@@ -13,10 +14,78 @@ repositories {
 }
 
 dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.7.0'
+	implementation 'com.oracle.database.jdbc:ojdbc8:21.5.0.0'
+	implementation 'org.projectlombok:lombok:1.18.24'
+	implementation 'javax.validation:validation-api:2.0.1.Final'
+	implementation 'org.hibernate.validator:hibernate-validator:6.2.0.Final'
+	implementation 'org.springframework.boot:spring-boot-starter-validation:2.7.0'
+//log
+	implementation 'org.slf4j:slf4j-api:1.7.36'
+
+	//json
+	implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+
+	//file upload
+	implementation 'commons-fileupload:commons-fileupload:1.4'
+
+	//queryDsl
+	implementation 'com.querydsl:querydsl-jpa:5.0.0'
+	implementation 'com.querydsl:querydsl-apt:5.0.0'
+	implementation 'org.springframework.data:spring-data-jdbc:2.4.0'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc:2.7.0'
+	implementation 'org.springframework.boot:spring-boot-starter-jdbc:2.7.0'
+
+	//fetch시 값이 없으면 null 저장
+	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-hibernate5:2.13.3'
+	implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.3'
+	implementation 'com.fasterxml.jackson.core:jackson-core:2.13.3'
+
+	//spring batch
+	implementation 'org.springframework.boot:spring-boot-starter-batch'
+	implementation 'org.springframework.boot:spring-boot-starter-quartz:2.7.3'
+
+	testImplementation 'org.springframework.batch:spring-batch-test'
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	implementation 'org.springframework.boot:spring-boot-devtools'
+	annotationProcessor 'org.projectlombok:lombok:1.18.24'
+
+
+	//spring security
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.security:spring-security-test:5.7.1'
+	implementation 'org.springframework.security:spring-security-config:5.7.1'
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5:3.0.4.RELEASE'
+
+	//redis
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis:2.7.0'
+	implementation 'org.springframework.session:spring-session-data-redis:2.7.0'
+
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+def querydslSrcDir = "$buildDir/generated/querydsl"
+
+querydsl {
+	jpa = true
+	querydslSourcesDir = querydslSrcDir
+}
+
+sourceSets {
+	main.java.srcDirs querydslSrcDir
+}
+
+// 여기부터 gradle 5.0 이후로 추가
+configurations {
+	querydsl.extendsFrom compileClasspath
+}
+
+compileQuerydsl{
+	options.annotationProcessorPath = configurations.querydsl
 }
