@@ -21,7 +21,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers(
                             "/",
                             "/member/register",
-                            "/member/emailCheck",
+                            "/member/emailCheck/**",
                             "/latest",
                             "/popular",
                             "/main/posts").permitAll()
