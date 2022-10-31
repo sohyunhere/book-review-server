@@ -1,10 +1,13 @@
 package com.example.bookreviewserver.controller;
 
+import com.example.bookreviewserver.dto.SignupDto;
+import com.example.bookreviewserver.model.Member;
 import com.example.bookreviewserver.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -12,18 +15,19 @@ import org.springframework.web.bind.annotation.*;
 public class MemberApiController {
 
     private final MemberService memberService;
-//
-//    //회원가입
-//    @PostMapping("/member/register")
-//    public int register(@RequestBody SignupDto dto) throws Exception {
-//
-//        memberService.join(dto);
-//        return 1;
-//    }
-//
+
+    //회원가입
+    @PostMapping("/member/register")
+    public int register(@RequestBody SignupDto dto) throws Exception {
+
+        memberService.join(dto);
+        return 1;
+    }
+
     //이메일이 중복하는지
-    @GetMapping("/member/emailCheck/{param}")
-    public int emailCheck(@PathVariable String email){
+    @PostMapping("/member/emailCheck")
+    public int emailCheck(@RequestBody String email){
+
         try{
             memberService.findMemberByEmail(email);
         }catch(IllegalStateException e){
@@ -31,17 +35,26 @@ public class MemberApiController {
         }
         return 1; //중북
     }
-//
-//    //닉네임 수정하기
-//    @PostMapping("/member/mypage/nickname")
-//    public String changeNickname(@RequestParam("nickname") String nickname,  Authentication auth) {
-//        Member user = (Member) auth.getPrincipal();
-//
-//        Member changedUser = memberService.updateNickname(user.getMemberId(), nickname);
-//        //세션 수정
-//        memberService.changeSession(changedUser);
-//        return nickname;
-//    }
+
+    //loaduserbyusername
+    @PostMapping("/member/findByMemberEmail")
+    public Member findByMemberEmail(@RequestBody String username) {
+
+        return memberService.findMemberByEmail(username);
+    }
+
+    //닉네임 수정하기
+    @PostMapping("/member/mypage/nickname")
+    public Member changeNickname(@RequestBody Map<String, Object> map) {
+        String nickname = (String) map.get("nickname");
+        String email = (String) map.get("email");
+
+        Member user = memberService.findMemberByEmail(email);
+
+        Member changedUser = memberService.updateNickname(user.getMemberId(), nickname);
+
+        return changedUser;
+    }
 //
 //    //비밀번호 수정하기
 //    @PostMapping("/member/mypage/password")
