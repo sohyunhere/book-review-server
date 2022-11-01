@@ -47,21 +47,18 @@ public class MemberService {
 
     }
 
-//    @Transactional
-//    //비밀번호 수정
-//    public Member changePassword (Member member, String originPW, String newPW) throws Exception {
-//       if(passwordEncoder.matches(originPW, member.getMemberPassword())){
-//           //true
-//           Optional<Member> result =  memberQueryRepo.updatePassword(member.getMemberId(), newPW);
-//           if(result.isEmpty()){
-//               //예외처리 없을때
-//               throw new IllegalArgumentException();
-//           }
-//           return result.get();
-//       }else{
-//           throw new Exception();
-//       }
-//
-//    }
+    @Transactional
+    //비밀번호 수정
+    public Member changePassword (String email, String newPW){
+        Member member = findMemberByEmail(email);
+
+        Optional<Member> result =  memberQueryRepo.updatePassword(member.getMemberId(), newPW);
+        if(result.isEmpty()){
+            //예외처리 없을때
+            throw new IllegalArgumentException();
+        }
+        return result.get();
+
+    }
 
 }

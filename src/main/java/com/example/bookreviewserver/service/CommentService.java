@@ -47,12 +47,12 @@ public class CommentService {
     }
 
     //email에 따른 댓글 리스트
-//    @Transactional
-//    public List<Comments> findListByEmail(String email){
-//        Member member = memberService.findMemberByEmail(email);
-//        List<Comments> comments = member.getComments();
-//        return comments;
-//    }
+    @Transactional
+    public List<Comments> findListByEmail(String email){
+        Member member = memberService.findMemberByEmail(email);
+        List<Comments> comments = member.getComments();
+        return comments;
+    }
 
     //댓글 내용 수정
     @Transactional

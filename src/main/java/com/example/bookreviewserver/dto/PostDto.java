@@ -1,13 +1,12 @@
 package com.example.bookreviewserver.dto;
 
-import com.example.bookreviewserver.model.Category;
-import com.example.bookreviewserver.model.Location;
-import com.example.bookreviewserver.model.Member;
-import com.example.bookreviewserver.model.Post;
+import com.example.bookreviewserver.model.*;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
 @Data
@@ -32,6 +31,7 @@ public class PostDto {
     private Long locationId;
     private double lat;
     private double lng;
+    public PostDto(){}
     public Post toEntity(){
         return Post.builder()
                 .member(member)
@@ -47,6 +47,5 @@ public class PostDto {
                 .location(location)
                 .build();
     }
-
 
 }

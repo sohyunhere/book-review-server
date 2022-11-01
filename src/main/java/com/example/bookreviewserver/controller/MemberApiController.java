@@ -55,18 +55,17 @@ public class MemberApiController {
 
         return changedUser;
     }
-//
-//    //비밀번호 수정하기
-//    @PostMapping("/member/mypage/password")
-//    public int changePassword(@RequestParam("originPassword") String originPW, @RequestParam("newPassword") String newPW, Authentication auth) {
-//        try{
-//            Member changedUser = memberService.changePassword((Member) auth.getPrincipal(), originPW, newPW);
-//            memberService.changeSession(changedUser);
-//        }catch (Exception e){
-//            //에러발생 현재 비밀번호가 일치하지 않을 떄
-//            return 0;
-//        }
-//        return 1;
-//    }
+
+    //비밀번호 수정하기
+    @PostMapping("/member/mypage/password")
+    public int changePassword(@RequestBody Map<String, Object> map) throws Exception {
+
+            String email = (String) map.get("email");
+            String newPW = (String) map.get("newPW");
+
+            Member changedUser = memberService.changePassword(email, newPW);
+
+        return 1;
+    }
 
 }
