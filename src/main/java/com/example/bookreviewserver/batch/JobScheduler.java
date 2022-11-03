@@ -23,7 +23,7 @@ public class JobScheduler {
     private final JpaPageJob1 jpaPageJob1;
 
 
-    @Scheduled(cron="0 0 9 * * ?")
+    @Scheduled(cron="0 0 12 * * ?")
 //    @Scheduled(cron="*/10 * * * * *")
     public void runJob() {
 

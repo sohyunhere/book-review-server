@@ -1,18 +1,14 @@
 package com.example.bookreviewserver.controller;
 
 import com.example.bookreviewserver.dto.PostDd;
-import com.example.bookreviewserver.model.Category;
 import com.example.bookreviewserver.model.Comments;
 import com.example.bookreviewserver.model.Post;
 import com.example.bookreviewserver.service.BoardService;
-import com.example.bookreviewserver.service.CategoryService;
 import com.example.bookreviewserver.service.CommentService;
-import com.example.bookreviewserver.service.FileService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
